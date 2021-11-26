@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>당신은 이 웹사이트에...</h1>
+<p>{{ count }} 번 방문하였습니다.</p>
+<p>현재 아이피: {{ client.remote_addr }}</p>
+<p>User-Agent: {{ client.user_agent }}</p>
+{% endblock %}
