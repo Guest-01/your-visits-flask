@@ -1,8 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>당신은 이 웹사이트에...</h1>
-<p>{{ count }} 번 방문하였습니다.</p>
-<p>현재 아이피: {{ client.remote_addr }}</p>
-<p>User-Agent: {{ client.user_agent }}</p>
+{% if g.user %}
+<a href="{{ url_for('main.logout') }}">{{ g.user.username }}(로그아웃)</a>
+<h2>{{g.user.username}}님은 이 웹사이트에... {{ user_info['total_count'] }}번 방문하였습니다.</h2>
+<p>현재 아이피: {{ current_ip.ip }}</p>
+<p>과거 아이피:</p>
+<ul>
+    {% for ip in user_info['ips'] %}
+    <li>{{ ip.ip }}: {{ ip.count }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<a href="{{ url_for('main.login') }}">로그인</a>
+<a href="{{ url_for('main.signup') }}">회원가입</a>
+<h2>당신은 이 웹사이트에... {{ current_ip.count }}번 방문하였습니다.</h2>
+<p>현재 아이피: {{ current_ip.ip }}</p>
+{% endif %}
+<footer>
+    Developed with Python3 - Flask framework @2021
+</footer>
 {% endblock %}
